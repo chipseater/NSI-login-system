@@ -1,4 +1,4 @@
-#!/workspace/NSI-login-system/bin/python3
+#!/workspace/NSI-login-system/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
