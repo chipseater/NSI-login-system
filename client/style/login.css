@@ -1,3 +1,55 @@
 main {
-    background: url("../assets/login-background.jpg");
+    height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.login {
+    width: 30%;
+    height: 40%;
+    border-radius: 15px;
+    backdrop-filter: blur(20px);
+    box-shadow: 11px 10px 63px -19px rgba(0,0,0,0.68);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login h2 {
+    text-align: center;
+    color: white;
+}
+
+.login input {
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.login input[type="text"] {
+    background-color: #fffe;
+    display: block;
+    outline: none;
+    height: 30px;
+    width: calc(100% - 30px);
+    border: 3px solid gray;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.login input[type="submit"] {
+    border: 3px solid var(--primary);
+    color: var(--primary);
+    font-size: large;
+    font-weight: bold;
+    border-radius: 15px;
+    margin: 5px 0 0 10px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+}
+
+.login input[type="text"]:focus {
+    border: 3px solid var(--primary);
+}
+

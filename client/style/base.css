@@ -16,6 +16,8 @@ h1 {
 
 body {
     margin: 0;
+    background: url("../assets/login-background.png");
+    background-size: cover;
 }
 
 a {
