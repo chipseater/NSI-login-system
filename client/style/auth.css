@@ -1,5 +1,5 @@
 main {
-    height: calc(100vh);
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@ main {
     background-color: var(--primary);
     color: white;
     transition: all;
-    transition-duration: 0.25s;
+    transition-duration: 0.2s;
 }
 
 .auth-container input[type="text"]:focus, input[type="password"]:focus {
