@@ -2,4 +2,23 @@
 
 main {
     margin: 10px;
+    height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 60px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.card .material-symbols-outlined {
+    font-size: 50px;
+    display: block;
+    margin: 10px;
 }

@@ -7,7 +7,8 @@
 
 * {
     font-family: 'Roboto';
-    --primary: #3b82f6;
+    color: white;
+    --primary: #166534;
 }
 
 h1 {
@@ -22,4 +23,9 @@ body {
 
 a {
     text-decoration: none;
+}
+
+.blur-box {
+    backdrop-filter: blur(20px);
+    box-shadow: 11px 10px 63px -19px rgba(0,0,0,0.68);
 }

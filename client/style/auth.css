@@ -5,29 +5,27 @@ main {
     justify-content: center;
 }
 
-.login {
+.auth-container {
     width: 30%;
-    height: 40%;
+    height: fit-content;
     border-radius: 15px;
-    backdrop-filter: blur(20px);
-    box-shadow: 11px 10px 63px -19px rgba(0,0,0,0.68);
     padding: 10px;
     display: flex;
     flex-direction: column;
 }
 
-.login h2 {
+.auth-container h2 {
     text-align: center;
     color: white;
 }
 
-.login input {
+.auth-container input {
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    display: block;
 }
 
-.login input[type="text"] {
+.auth-container input[type="text"], input[type="password"] {
     background-color: #fffe;
-    display: block;
     outline: none;
     height: 30px;
     width: calc(100% - 30px);
@@ -37,19 +35,41 @@ main {
     padding: 5px;
 }
 
-.login input[type="submit"] {
+.auth-container input[type="submit"] {
     border: 3px solid var(--primary);
     color: var(--primary);
     font-size: large;
     font-weight: bold;
     border-radius: 15px;
-    margin: 5px 0 0 10px;
+    margin: 5px;
     cursor: pointer;
     width: 100px;
     height: 40px;
 }
 
-.login input[type="text"]:focus {
+.auth-container input[type="submit"]:active {
+    background-color: var(--primary);
+    color: white;
+    transition: all;
+    transition-duration: 0.25s;
+}
+
+.auth-container input[type="text"]:focus, input[type="password"]:focus {
     border: 3px solid var(--primary);
 }
 
+.submit-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-row {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        width: 90%;
+    }
+}
