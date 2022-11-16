@@ -7,7 +7,6 @@
 
 * {
     font-family: 'Roboto';
-    color: white;
     --primary: #166534;
 }
 
@@ -17,6 +16,7 @@ h1 {
 
 body {
     margin: 0;
+    color: white;
     background: url("../assets/login-background.png");
     background-size: cover;
 }
