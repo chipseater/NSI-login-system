@@ -19,9 +19,11 @@ class AuthManager:
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id integer PRIMARY KEY,
-            name text NOT NULL,
-            begin_date text,
-            end_date text
+            first_name varchar(255),
+            last_name varchar(255),
+            email varchar(255) NOT NULL,
+            passwd_hash varchar(255),
+            passwd_salt varchar(255)
         ); """)
 
 
