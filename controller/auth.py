@@ -1,4 +1,4 @@
-from dbFunc import dbFunc
+from .dbFunc import dbFunc
 import sqlite3
 import os
 import hashlib
@@ -9,8 +9,7 @@ class AuthManager:
         self.conn = sqlite3.connect('database/auth.db')
 
     @staticmethod
-    def hashPasswd(passwd):
-        passwd_salt = os.urandom(32)
+    def hashPasswd(passwd, passwd_salt):
         passwd_hash = hashlib.pbkdf2_hmac(
             'sha256',
             passwd.encode('utf-8'),
@@ -30,11 +29,11 @@ class AuthManager:
             last_name varchar(255),
             email varchar(255) NOT NULL,
             passwd_hash varchar(255)
-        ); """)
+        ) """)
 
     @dbFunc
     def registerUser(self, cursor, first_name, last_name, email, passwd):
-        passwd_hash = AuthManager.hashPasswd(passwd)
+        passwd_hash = AuthManager.hashPasswd(passwd, os.urandom(32))
 
         cursor.execute(f"""
             INSERT INTO users (first_name, last_name, email, passwd_hash) VALUES (
@@ -43,10 +42,20 @@ class AuthManager:
         """)
 
     @dbFunc
-    def loginUser(self, cursor, first_name, last_name, email, passwd):
-        cursor.execute(f"""
-            SELECT * FROM users WHERE email = {email}
-        """)
+    def verifyUser(self, cursor, email, passwd):
+        passwd_hash_from_db = cursor.execute(f"""
+            SELECT passwd_hash FROM users WHERE email = "{email}"
+        """).fetchone()[0]
+
+        passwd_key_from_db = passwd_hash_from_db[:64]
+        passwd_salt_from_db = bytes.fromhex(passwd_hash_from_db[64:])
+
+        passwd_hash_from_request = AuthManager.hashPasswd(passwd, passwd_salt_from_db)
+
+        return {
+            "valid_passwd": passwd_hash_from_db == passwd_hash_from_request
+        }
+
         
 
 

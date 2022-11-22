@@ -30,7 +30,7 @@ def register():
 def login():
     email = request.json['email']
     passwd = request.json['passwd']
-    return None
+    return authCtl.AuthManager().verifyUser(email, passwd)
 
 
 app.run(host='0.0.0.0', port=5000, debug=True)
