@@ -1,6 +1,7 @@
-import controller.auth as authCtl
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
+from middleware.token_required import token_required
+from controller.auth import AuthManager
 
 
 app = Flask(__name__)
@@ -9,6 +10,7 @@ CORS(app)
 
 @app.route('/', methods=["GET"])
 @cross_origin()
+@token_required
 def index():
     return {
         'text': 'Hello World',
@@ -30,7 +32,7 @@ def register():
 def login():
     email = request.json['email']
     passwd = request.json['passwd']
-    return authCtl.AuthManager().verifyUser(email, passwd)
+    return AuthManager().verifyUser(email, passwd)
 
 
 app.run(host='0.0.0.0', port=5000, debug=True)
