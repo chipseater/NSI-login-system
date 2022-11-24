@@ -43,9 +43,18 @@ class AuthManager:
 
     @dbFunc
     def verifyUser(self, cursor, email, passwd):
-        passwd_hash_from_db = cursor.execute(f"""
-            SELECT passwd_hash FROM users WHERE email = "{email}"
-        """).fetchone()[0]
+        payload = cursor.execute(f"""
+            SELECT * FROM users WHERE email = "{email}"
+        """).fetchone()
+
+        if not payload:
+            return {
+                "valid_passwd": False,
+                "user_id": -1,
+                "error": f"No user with email {email}",
+            }
+
+        passwd_hash_from_db, user_id = payload[4], payload[0]
 
         passwd_key_from_db = passwd_hash_from_db[:64]
         passwd_salt_from_db = bytes.fromhex(passwd_hash_from_db[64:])
@@ -53,10 +62,9 @@ class AuthManager:
         passwd_hash_from_request = AuthManager.hashPasswd(passwd, passwd_salt_from_db)
 
         return {
-            "valid_passwd": passwd_hash_from_db == passwd_hash_from_request
-        }
-
-        
+            "valid_passwd": passwd_hash_from_db == passwd_hash_from_request,
+            "user_id": user_id,
+        }        
 
 
 if __name__ == '__main__':

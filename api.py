@@ -1,10 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from middleware.token_required import token_required
+from utils.tokenTranslater import encode
 from controller.auth import AuthManager
+from dotenv import load_dotenv
 
 
 app = Flask(__name__)
+load_dotenv()
 CORS(app)
 
 
@@ -32,7 +35,11 @@ def register():
 def login():
     email = request.json['email']
     passwd = request.json['passwd']
-    return AuthManager().verifyUser(email, passwd)
+    userVerification = AuthManager().verifyUser(email, passwd)
+    if not userVerification['valid_passwd']:
+        return {'error': 'Invalid password'}
+    return encode({'user_id': userVerification['user_id']})
+    
 
 
 app.run(host='0.0.0.0', port=5000, debug=True)
