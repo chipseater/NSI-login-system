@@ -1,4 +1,4 @@
-def dbFunc(func):
+def db_func(func):
     def inner(self, *args, **kwargs):
         try:
             cursor = self.conn.cursor()

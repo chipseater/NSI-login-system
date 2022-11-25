@@ -1,4 +1,4 @@
-from .dbFunc import dbFunc
+from .db_func import db_func
 import sqlite3
 import os
 import hashlib
@@ -19,19 +19,15 @@ class AuthManager:
 
         return passwd_hash + passwd_salt.hex()
 
-
-    @dbFunc
+    @db_func
     def resetDatabase(self, cursor):
         cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS refresh_tokens (
             id integer PRIMARY KEY,
-            first_name varchar(255),
-            last_name varchar(255),
-            email varchar(255) NOT NULL,
-            passwd_hash varchar(255)
+            token varchar(255)
         ) """)
 
-    @dbFunc
+    @db_func
     def registerUser(self, cursor, first_name, last_name, email, passwd):
         passwd_hash = AuthManager.hashPasswd(passwd, os.urandom(32))
 
@@ -41,7 +37,7 @@ class AuthManager:
             )
         """)
 
-    @dbFunc
+    @db_func
     def verifyUser(self, cursor, email, passwd):
         payload = cursor.execute(f"""
             SELECT passwd_hash, id FROM users WHERE email = "{email}"
@@ -55,19 +51,30 @@ class AuthManager:
             }
 
         passwd_hash_from_db, user_id = payload
-
-        passwd_key_from_db = passwd_hash_from_db[:64]
         passwd_salt_from_db = bytes.fromhex(passwd_hash_from_db[64:])
-
-        passwd_hash_from_request = AuthManager.hashPasswd(passwd, passwd_salt_from_db)
+        passwd_hash_from_request = AuthManager.hashPasswd(
+            passwd, passwd_salt_from_db)
 
         return {
             "valid_passwd": passwd_hash_from_db == passwd_hash_from_request,
             "user_id": user_id,
-        }        
+        }
 
+    @db_func
+    def storeRefreshToken(self, cursor, token):
+        cursor.execute(f"""INSERT INTO refresh_tokens (token) VALUES (
+            "{token}"
+        )"""
+    )
 
-if __name__ == '__main__':
-    if input('Do you really want to wipe out all of the user data ?') == 'y':
-        authmanager = AuthManager()
-        authmanager.resetDatabase()
+    @db_func
+    def isTokenInStorage(self, cursor, token):
+        res = cursor.execute(
+            f"""
+                SELECT id FROM refresh_tokens WHERE token = "{token}"
+            """
+        ).fetchone()
+
+        if res:
+            return {'token_in_storage': True}
+        return {'token_in_storage': False}

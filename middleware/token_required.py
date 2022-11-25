@@ -1,8 +1,6 @@
 from werkzeug.datastructures import ImmutableMultiDict
-from dotenv import dotenv_values
 from flask import request
-import jwt
-import os
+from .tokenTranslater import decode
 
 
 def token_required(func):
@@ -10,15 +8,11 @@ def token_required(func):
         token = None
         if 'x-access-tokens' in request.headers:
             token = request.headers['x-access-tokens']
-            print(token)
 
         if not token:
             return {'error': 'a valid token is missing'}
 
-
-        data = jwt.decode(
-            token, os.getenv('SECRET_KEY'), algorithms=["HS256"]
-        )
+        data = decode(token, 'SECRET_KEY')
 
         http_args = request.args.to_dict()
         http_args['user_id'] = data['user_id']
