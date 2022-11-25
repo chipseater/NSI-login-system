@@ -21,7 +21,7 @@ def token_required(func):
         )
 
         http_args = request.args.to_dict()
-        http_args['user_id'] = data.id
+        http_args['user_id'] = data['user_id']
 
         request.args = ImmutableMultiDict(http_args)
 

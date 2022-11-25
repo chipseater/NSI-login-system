@@ -15,8 +15,10 @@ CORS(app)
 @cross_origin()
 @token_required
 def index():
+    print(request.args.to_dict()['user_id'])
     return {
         'text': 'Hello World',
+        'user_id': request.args.to_dict()['user_id'],
     }
 
 
@@ -27,7 +29,7 @@ def register():
     last_name = request.json['last_name']
     email = request.json['email']
     passwd = request.json['passwd']
-    return authCtl.AuthManager().registerUser(first_name, last_name, email, passwd)
+    return AuthManager().registerUser(first_name, last_name, email, passwd)
 
 
 @app.route('/login', methods=["POST"])
@@ -37,7 +39,7 @@ def login():
     passwd = request.json['passwd']
     userVerification = AuthManager().verifyUser(email, passwd)
     if not userVerification['valid_passwd']:
-        return {'error': 'Invalid password'}
+        return {'error': 'Invalid credentials'}
     return encode({'user_id': userVerification['user_id']})
     
 

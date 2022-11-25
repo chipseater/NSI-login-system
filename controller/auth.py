@@ -44,7 +44,7 @@ class AuthManager:
     @dbFunc
     def verifyUser(self, cursor, email, passwd):
         payload = cursor.execute(f"""
-            SELECT * FROM users WHERE email = "{email}"
+            SELECT passwd_hash, id FROM users WHERE email = "{email}"
         """).fetchone()
 
         if not payload:
@@ -54,7 +54,8 @@ class AuthManager:
                 "error": f"No user with email {email}",
             }
 
-        passwd_hash_from_db, user_id = payload[4], payload[0]
+        passwd_hash_from_db, user_id = payload
+        print(passwd_hash_from_db, user_id)
 
         passwd_key_from_db = passwd_hash_from_db[:64]
         passwd_salt_from_db = bytes.fromhex(passwd_hash_from_db[64:])
