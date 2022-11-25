@@ -55,7 +55,6 @@ class AuthManager:
             }
 
         passwd_hash_from_db, user_id = payload
-        print(passwd_hash_from_db, user_id)
 
         passwd_key_from_db = passwd_hash_from_db[:64]
         passwd_salt_from_db = bytes.fromhex(passwd_hash_from_db[64:])

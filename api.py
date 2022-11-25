@@ -4,7 +4,8 @@ from middleware.token_required import token_required
 from utils.tokenTranslater import encode
 from controller.auth import AuthManager
 from dotenv import load_dotenv
-
+import jwt
+import os
 
 app = Flask(__name__)
 load_dotenv()
@@ -40,8 +41,26 @@ def login():
     userVerification = AuthManager().verifyUser(email, passwd)
     if not userVerification['valid_passwd']:
         return {'error': 'Invalid credentials'}
-    return encode({'user_id': userVerification['user_id']})
+    res = {
+        'access_token': encode({'user_id': userVerification['user_id']}, 'SECRET_KEY'),
+        'refresh_token': encode({'user_id': userVerification['user_id']}, 'REFRESH_KEY')
+    }
+    return res
     
+
+@app.route('/get-token', methods=["POST"])
+@cross_origin()
+def get_token():
+    refresh_token = request.json['refresh_token']
+
+    data = jwt.decode(
+        refresh_token, os.getenv('REFRESH_KEY'), algorithms=["HS256"]
+    )
+
+    return {
+        "access_token": encode(data, 'SECRET_KEY')
+    }
+
 
 
 app.run(host='0.0.0.0', port=5000, debug=True)
