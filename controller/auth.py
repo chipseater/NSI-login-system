@@ -78,3 +78,9 @@ class AuthManager:
         if res:
             return {'token_in_storage': True}
         return {'token_in_storage': False}
+
+    @db_func
+    def logout(self, cursor, refresh_token):
+        cursor.execute(f"""
+            DELETE FROM refresh_tokens WHERE token = "{refresh_token}"
+        """)

@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:5000 HTTP/1.1
-x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0MDU0NDkuMH0.GYU1QJ-IprHKInkusqmk48O5mcJCt4_ZTVX85aoxkM8
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0NjMzMjUuMH0.JQb_SQ-IDpVRViq03xi1ps5VXtv7XLQEOO_IM5RF1EM
 
 ###
 
@@ -30,5 +30,15 @@ POST http://localhost:5000/get-token HTTP/1.1
 Content-Type: application/json
 
 {
-    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0MDYzMTkuMH0.VIQBn3Ut9v5HwM0_1gh9fRT-1WTua7ueSfsdS2wtk-4"
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0NjMzMjUuMH0.AMg9jbbQ70K7T_0BhConJnmAgzyeUbyvAEQycRbVJR8"
 }
+
+###
+
+POST http://localhost:5000/logout HTTP/1.1
+Content-Type: application/json
+
+{
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0NjMzMjUuMH0.AMg9jbbQ70K7T_0BhConJnmAgzyeUbyvAEQycRbVJR8"
+}
+

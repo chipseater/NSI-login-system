@@ -4,6 +4,7 @@ from middleware.token_required import token_required
 from middleware.tokenTranslater import encode, decode
 from controller.auth import AuthManager
 from dotenv import load_dotenv
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -71,9 +72,29 @@ def get_token():
 
     data = decode(refresh_token, 'REFRESH_KEY')
 
+    if 'error' in data:
+        return data
+
+
     return {
         'access_token': encode(data, 'SECRET_KEY')
     }
 
+
+@app.route('/logout', methods=['POST'])
+@cross_origin()
+def logout():
+    refresh_token = request.json['refresh_token']
+    res = AuthManager().logout(refresh_token)
+
+    if 'error' in res:
+        return {
+            'success': not res['error'],
+            'error': res['error']
+        }
+    
+    return {
+        'error': 'Something bad happenened'
+    }
 
 app.run(host='0.0.0.0', port=5000, debug=True)
