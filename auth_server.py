@@ -29,7 +29,25 @@ def register():
     last_name = request.json['last_name']
     email = request.json['email']
     passwd = request.json['passwd']
-    return AuthManager().registerUser(first_name, last_name, email, passwd)
+
+    res = AuthManager().registerUser(first_name, last_name, email, passwd)
+    if res['error']:
+        return res
+    
+    access_token = encode(
+        {'user_id': res['user_id']}, 'SECRET_KEY')
+    
+    refresh_token = encode(
+        {'user_id': res['user_id']},
+        'REFRESH_KEY'
+    )
+
+    AuthManager().storeRefreshToken(refresh_token)
+
+    return {
+        'access_token': access_token,
+        'refresh_token': refresh_token
+    }
 
 
 @app.route('/login', methods=['POST'])

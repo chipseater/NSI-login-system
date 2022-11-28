@@ -37,6 +37,15 @@ class AuthManager:
             )
         """)
 
+        res = cursor.execute(f"""
+            SELECT id FROM users WHERE email = "{email}"
+        """).fetchone()
+
+        return {
+            'user_id': res[0]
+        }
+
+
     @db_func
     def verifyUser(self, cursor, email, passwd):
         payload = cursor.execute(f"""

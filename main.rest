@@ -3,9 +3,9 @@ POST http://localhost:5000/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "john.doe@gmail.com",
+    "first_name": "Théo",
+    "last_name": "Sueur Verdier",
+    "email": "theo.sueur@gmail.com",
     "passwd": "1234"
 }
 
@@ -15,14 +15,14 @@ POST http://localhost:5000/login HTTP/1.1
 Content-Type: application/json
   
 {
-    "email": "john.doe@gmail.com",
+    "email": "theo.sueur@gmail.com",
     "passwd": "1234"
 }
 
 ###
 
 GET http://localhost:5000 HTTP/1.1
-x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0NjMzMjUuMH0.JQb_SQ-IDpVRViq03xi1ps5VXtv7XLQEOO_IM5RF1EM
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjY5NjI4MzkzLjB9.nUD3FZEWbSZt7cx3hWsMV3t0yBbfdP9VRVhofOr_MNU
 
 ###
 
@@ -41,4 +41,3 @@ Content-Type: application/json
 {
     "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0NjMzMjUuMH0.AMg9jbbQ70K7T_0BhConJnmAgzyeUbyvAEQycRbVJR8"
 }
-
