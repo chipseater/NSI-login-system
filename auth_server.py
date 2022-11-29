@@ -35,7 +35,7 @@ def register():
         return res
     
     access_token = encode(
-        {'user_id': res['user_id']}, 'SECRET_KEY')
+        {'user_id': res['user_id']}, 'SECRET_KEY', lifespan=600)
     
     refresh_token = encode(
         {'user_id': res['user_id']},
@@ -94,11 +94,15 @@ def get_token():
 
     if 'error' in data:
         return data
+    
+    access_token = encode(data, 'SECRET_KEY')
+    refresh_token = encode(data, 'REFRESH_KEY')
 
+    AuthManager().storeRefreshToken(refresh_token)
 
     return {
-        'access_token': encode(data, 'SECRET_KEY'),
-        'refresh_token': encode(data, 'REFRESH_KEY')
+        access_token: access_token,
+        refresh_token: refresh_token,
     }
 
 
