@@ -4,7 +4,7 @@ import jwt
 import os
 
 
-def encode(dict, key, lifespan=600):
+def encode(dict, key, lifespan=30):
     if lifespan > 0:
         dict["exp"] = time.mktime(
             (datetime.datetime.now() + datetime.timedelta(seconds=lifespan)).timetuple()

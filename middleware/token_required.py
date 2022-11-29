@@ -14,6 +14,9 @@ def token_required(func):
 
         data = decode(token, 'SECRET_KEY')
 
+        if 'error' in data:
+            return {'error': 'Expired token'}
+
         http_args = request.args.to_dict()
         http_args['user_id'] = data['user_id']
 

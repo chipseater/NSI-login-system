@@ -39,7 +39,8 @@ def register():
     
     refresh_token = encode(
         {'user_id': res['user_id']},
-        'REFRESH_KEY'
+        'REFRESH_KEY',
+        lifespan=86400
     )
 
     AuthManager().storeRefreshToken(refresh_token)
@@ -65,7 +66,8 @@ def login():
     
     refresh_token = encode(
         {'user_id': userVerification['user_id']},
-        'REFRESH_KEY'
+        'REFRESH_KEY',
+        lifespan=86400 # 1 day
     )
 
     AuthManager().storeRefreshToken(refresh_token)
@@ -95,7 +97,8 @@ def get_token():
 
 
     return {
-        'access_token': encode(data, 'SECRET_KEY')
+        'access_token': encode(data, 'SECRET_KEY'),
+        'refresh_token': encode(data, 'REFRESH_KEY')
     }
 
 
