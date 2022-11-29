@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:5000 HTTP/1.1
-x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjY5NjI4MzkzLjB9.nUD3FZEWbSZt7cx3hWsMV3t0yBbfdP9VRVhofOr_MNU
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjY5NzMxMjg4LjB9.Zw8J4f0NNOvnJjXZ60Edj50gMEy1YAHtORNlm7OoVF0
 
 ###
 

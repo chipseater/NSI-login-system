@@ -1,6 +1,6 @@
 from werkzeug.datastructures import ImmutableMultiDict
 from flask import request
-from .tokenTranslater import decode
+from .token_translater import decode
 
 
 def token_required(func):

@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from middleware.token_required import token_required
-from middleware.tokenTranslater import encode, decode
+from middleware.token_translater import encode, decode
 from controller.auth import AuthManager
 from dotenv import load_dotenv
 from datetime import datetime
