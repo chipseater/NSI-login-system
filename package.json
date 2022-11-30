@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "npx nodemon server.py"
+  },
   "devDependencies": {
     "nodemon": "^2.0.20"
   }
