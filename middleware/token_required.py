@@ -23,4 +23,7 @@ def token_required(func):
         request.args = ImmutableMultiDict(http_args)
 
         return func(*args, **kwargs)
+
+    inner.__name__ = func.__name__
+    
     return inner

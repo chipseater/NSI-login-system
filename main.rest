@@ -11,6 +11,7 @@ Content-Type: application/json
 
 ###
 
+# Login route
 POST http://localhost:5000/login HTTP/1.1
 Content-Type: application/json
   
@@ -21,12 +22,24 @@ Content-Type: application/json
 
 ###
 
+# Root route
 GET http://localhost:5000 HTTP/1.1
-x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjY5NzMxMjg4LjB9.Zw8J4f0NNOvnJjXZ60Edj50gMEy1YAHtORNlm7OoVF0
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjY5OTIzMTM3LjB9.0-ALXn-hthImHSDdJUJPwjbk8aO0Tkdoz2HlDe-FTbI
 
 ###
 
+# Get token route
 POST http://localhost:5000/get-token HTTP/1.1
+Content-Type: application/json
+
+{
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjcwMDEwMTMyLjB9.op6Z0WlVykHykCj3pArxthjRkFnrCKcOGUSNLnu-LUU"
+}
+
+###
+
+# Logout route
+POST http://localhost:5000/logout HTTP/1.1
 Content-Type: application/json
 
 {
@@ -35,9 +48,24 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:5000/logout HTTP/1.1
+# Add todo route
+POST http://localhost:5000/add-todo HTTP/1.1
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjY5OTI0MzMyLjB9.TU8INOAfxlV0groyPaR7Cg0xslERvgIOV_jH98zB8q8
 Content-Type: application/json
 
 {
-    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2Njk0NjMzMjUuMH0.AMg9jbbQ70K7T_0BhConJnmAgzyeUbyvAEQycRbVJR8"
+    "name": "Finir ce projet génial",
+    "important": 0
+}
+
+###
+
+# Get todo route
+GET http://localhost:5000/get-todos HTTP/1.1
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiZXhwIjoxNjY5OTI0MzMyLjB9.TU8INOAfxlV0groyPaR7Cg0xslERvgIOV_jH98zB8q8
+Content-Type: application/json
+
+{
+    "name": "Finir ce super projet",
+    "important": 0
 }

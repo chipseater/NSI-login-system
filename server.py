@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
+from controller.todos import TodoManager
 from middleware.token_required import token_required
 from middleware.token_translater import encode, decode
 from controller.auth import AuthManager
@@ -16,10 +17,35 @@ CORS(app)
 @cross_origin()
 @token_required
 def index():
+    TodoManager().createTable()
     return {
         'text': 'Hello World',
         'user_id': request.args.to_dict()['user_id'],
     }
+
+
+@app.route('/add-todo', methods=['POST'])
+@cross_origin()
+@token_required
+def addTodo():
+    user_id = request.args.to_dict()['user_id']
+    name = request.json['name']
+    important = request.json['important']
+
+    res = TodoManager().createTodo(user_id, name, important)
+
+    return res
+
+
+@app.route('/get-todos', methods=['GET'])
+@cross_origin()
+@token_required
+def getUserTodos():
+    user_id = request.args.to_dict()['user_id']
+
+    res = TodoManager().getUserTodos(user_id)
+
+    return res
 
 
 @app.route('/register', methods=['POST'])

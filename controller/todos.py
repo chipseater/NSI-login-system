@@ -7,15 +7,43 @@ class TodoManager:
         self.conn = sqlite3.connect('database/todos.db')
 
     @db_func
-    def get_todos(self, cursor):
+    def createTable(self, cursor):
         cursor.execute(f"""
-            CREATE OR REPLACE TABLE todos (
+            CREATE TABLE todos (
                 id integer primary key,
-                owner integer,
                 name varchar(255),
-                descr text,
-                date text default unixepoch(),
-                priority integer,
-                done integer,
+                important integer,
+                done integer default FALSE,
+                owner integer,
+                date datetime default current_timestamp
             )
         """)
+    
+    @db_func
+    def createTodo(self, cursor, user_id, name, important):
+        cursor.execute(f"""
+            INSERT INTO todos (owner, name, important) VALUES (
+                "{user_id}", "{name}", "{important}"
+            )
+        """)
+
+        res = cursor.execute(f"""
+            SELECT * FROM todos WHERE owner = {user_id}
+        """).fetchone()
+
+        return {
+            'todo': res
+        }
+
+    
+    @db_func
+    def getUserTodos(self, cursor, user_id):
+        res = cursor.execute(f"""
+            SELECT * FROM todos WHERE owner = {user_id}
+        """).fetchall()
+
+        print(res)
+
+        return {
+            'todos': res
+        }
