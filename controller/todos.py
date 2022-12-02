@@ -29,7 +29,7 @@ class TodoManager:
 
         res = cursor.execute(f"""
             SELECT * FROM todos WHERE owner = {user_id}
-        """).fetchone()
+        """).fetchall()
 
         return {
             'todo': res
@@ -42,7 +42,16 @@ class TodoManager:
             SELECT * FROM todos WHERE owner = {user_id}
         """).fetchall()
 
-        print(res)
+        return {
+            'todos': res
+        }
+
+    
+    @db_func
+    def updateTodo(self, cursor, user_id, id, name, done):
+        res = cursor.execute(f"""
+            UPDATE todos SET name = "{name}", done = {done} WHERE id = {id} AND owner = {user_id}
+        """).fetchall()
 
         return {
             'todos': res

@@ -17,7 +17,6 @@ CORS(app)
 @cross_origin()
 @token_required
 def index():
-    TodoManager().createTable()
     return {
         'text': 'Hello World',
         'user_id': request.args.to_dict()['user_id'],
@@ -33,6 +32,20 @@ def addTodo():
     important = request.json['important']
 
     res = TodoManager().createTodo(user_id, name, important)
+
+    return res
+
+
+@app.route('/update-todo', methods=['PATCH'])
+@cross_origin()
+@token_required
+def updateTodo():
+    user_id = request.args.to_dict()['user_id']
+    todo_id = request.json['id']
+    name = request.json['name']
+    important = request.json['important']
+
+    res = TodoManager().updateTodo(user_id, todo_id, name, important)
 
     return res
 
