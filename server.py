@@ -5,7 +5,6 @@ from middleware.token_required import token_required
 from middleware.token_translater import encode, decode
 from controller.auth import AuthManager
 from dotenv import load_dotenv
-from datetime import datetime
 
 
 app = Flask(__name__)
@@ -44,8 +43,9 @@ def updateTodo():
     todo_id = request.json['id']
     name = request.json['name']
     important = request.json['important']
+    done = request.json['done']
 
-    res = TodoManager().updateTodo(user_id, todo_id, name, important)
+    res = TodoManager().updateTodo(user_id, todo_id, name, important, done)
 
     return res
 

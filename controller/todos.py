@@ -5,6 +5,13 @@ import sqlite3
 class TodoManager:
     def __init__(self):
         self.conn = sqlite3.connect('database/todos.db')
+        self.conn.row_factory = self.dict_factory
+
+    def dict_factory(self, cursor, row):
+        d = {}
+        for idx, col in enumerate(cursor.description):
+            d[col[0]] = row[idx]
+        return d
 
     @db_func
     def createTable(self, cursor):
@@ -48,9 +55,9 @@ class TodoManager:
 
     
     @db_func
-    def updateTodo(self, cursor, user_id, id, name, done):
+    def updateTodo(self, cursor, user_id, id, name, important, done):
         res = cursor.execute(f"""
-            UPDATE todos SET name = "{name}", done = {done} WHERE id = {id} AND owner = {user_id}
+            UPDATE todos SET name = "{name}", done = {done}, important = {important} WHERE id = {id} AND owner = {user_id}
         """).fetchall()
 
         return {
