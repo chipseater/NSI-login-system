@@ -50,6 +50,18 @@ def updateTodo():
     return res
 
 
+@app.route('/delete-todo', methods=['DELETE'])
+@cross_origin()
+@token_required
+def deleteTodo():
+    user_id = request.args.to_dict()['user_id']
+    todo_id = request.json['id']
+
+    res = TodoManager().deleteTodo(user_id, todo_id)
+
+    return res
+
+
 @app.route('/get-todos', methods=['GET'])
 @cross_origin()
 @token_required

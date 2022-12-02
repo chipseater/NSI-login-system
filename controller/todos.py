@@ -56,3 +56,14 @@ class TodoManager:
         return {
             'todos': res
         }
+
+    
+    @db_func
+    def deleteTodo(self, cursor, user_id, id):
+        res = cursor.execute(f"""
+            DELETE FROM todos WHERE id = {id} AND owner = {user_id}
+        """).fetchall()
+
+        return {
+            'todos': res
+        }
