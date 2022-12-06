@@ -44,9 +44,11 @@ class TodoManager:
 
     
     @db_func
-    def getUserTodos(self, cursor, user_id):
+    def getUserTodos(self, cursor, user_id, allTodos=False):
+        if not allTodos:
+            all_string = 'AND done = 0'
         res = cursor.execute(f"""
-            SELECT * FROM todos WHERE owner = {user_id}
+            SELECT * FROM todos WHERE owner = {user_id} {all_string}
         """).fetchall()
 
         return {

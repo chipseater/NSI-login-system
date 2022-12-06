@@ -3,6 +3,6 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:
-  - init: npm install && pip install Flask flask_cors pysqlite3 python-dotenv PyJWT
+  - init: npm install && pip install Flask flask_cors pysqlite3 python-dotenv PyJWT && npx nodemon server.py
 
 
